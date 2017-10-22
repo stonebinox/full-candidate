@@ -35,7 +35,7 @@ $app->before(function(Request $request) use($app){
     $request->getSession()->start();
 });
 
-/*$app->get('/', function() use($app){
+$app->get('/', function() use($app){
     if($app['session']->get('uid')!=NULL)
     {
         return $app->redirect('/applications');
@@ -44,14 +44,14 @@ $app->before(function(Request $request) use($app){
     {  
         return $app->redirect('/login');
     }
-});*/
+});
 
 $app->get('/applications',function() use($app){
-    return $app['twig']->render('index.html.twig'); 
+    return $app['twig']->render('applications.html.twig'); 
 });
 
 $app->get('/login',function() use($app){
-    return $app['twig']->render('login.html.twig'); 
+    return $app['twig']->render('index.html.twig'); 
 });
 
 $app->run();
