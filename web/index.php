@@ -18,12 +18,16 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
       'driver' => 'pdo_mysql',
-      'dbname' => 'heroku_bc01d6c27e92b76',
-      'user' => 'root',
-      'password' => 'adminspin#123',
-      'host'=> "cloud.spectralinsights.com",
+      'dbname' => 'heroku_39e3086099b39f3',
+      'user' => 'b66219b6e365b3',
+      'password' => '4efa1857',
+      'host'=> "us-cdbr-iron-east-05.cleardb.net",
     )
 ));
+
+$app->get('/', function() use($app){
+    return $app->redirect('/applications');
+});
 
 $app->get('/applications',function() use($app){
     return $app['twig']->render('index.html.twig'); 
