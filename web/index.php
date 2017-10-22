@@ -36,6 +36,7 @@ $app->before(function(Request $request) use($app){
 });
 
 $app->get('/', function() use($app){
+    return "hello";
     if($app['session']->get('uid')!=NULL)
     {
         return $app->redirect('/applications');
