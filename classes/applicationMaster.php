@@ -68,9 +68,10 @@ class applicationMaster
         $app=$this->app;
         $am="SELECT idapplication_master FROM application_master WHERE stat='1' ORDER BY idapplication_master DESC LIMIT 100";
         $appArray=array();
-        while($row=$app['db']->fetchAssoc($am))
+        $am=$app['db']->fetchAssoc($am);
+        for($i=0;$i<count($am);$i++)
         {
-            $appID=$row['idapplication_master'];
+            $appID=$am['idapplication_master'];
             $this->__construct($appID);
             $application=$this->getApplication();
             if(is_array($application))

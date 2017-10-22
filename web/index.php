@@ -7,6 +7,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = require __DIR__.'/../src/app.php';
 require __DIR__.'/../config/prod.php';
 require __DIR__.'/../src/controllers.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => 'php://stderr',
@@ -25,12 +27,31 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     )
 ));
 
+$app->register(new Silex\Provider\SessionServiceProvider, array(
+    'session.storage.save_path' => dirname(__DIR__) . '/tmp/sessions'
+));
+
+$app->before(function(Request $request) use($app){
+    $request->getSession()->start();
+});
+
 $app->get('/', function() use($app){
-    return $app->redirect('/applications');
+    if($app['session']->get('uid')!=NULL)
+    {
+        return $app->redirect('/applications');
+    }
+    else
+    {  
+        return $app->redirect('/login');
+    }
 });
 
 $app->get('/applications',function() use($app){
     return $app['twig']->render('index.html.twig'); 
+});
+
+$app->get('/login',function() use($app){
+    return $app['twig']->render('login.html.twig'); 
 });
 
 $app->run();
