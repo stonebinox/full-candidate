@@ -135,7 +135,7 @@ app.controller('apps',function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while creating this application. Please try again in a bit. This is the error we see: "+err);
                     },
                     success:function(responseText){
-                        console.log(responseText);
+                        responseText=$.trim(responseText);
                         $("#myModal").find(".btn-primary").removeClass("disabled");
                         if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
                             if(responseText=="INVALID_USER_ID"){
