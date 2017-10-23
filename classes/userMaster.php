@@ -145,7 +145,7 @@ class userMaster
                         if(($um=="")||($um==NULL))
                         {
                             $hashPassword=md5($userPassword);
-                            $in="INSERT INTO user_master (timestamp,user_name,user_email,user_password) VALUES (NOW(),'1','$userName','$userEmail','$hashPassword')";
+                            $in="INSERT INTO user_master (timestamp,user_name,user_email,user_password) VALUES (NOW(),'$userName','$userEmail','$hashPassword')";
                             $in=$app['db']->executeQuery($in);
                             return "ACCOUNT_CREATED";
                         }
