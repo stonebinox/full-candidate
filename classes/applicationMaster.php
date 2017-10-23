@@ -106,5 +106,46 @@ class applicationMaster extends userMaster
             return "INVALID_USER_ID";
         }
     }
+    function createApplication($applicationTitle,$applicationDescription,$userID) //to create an application
+    {
+        $app=$this->app;
+        $applicationTitle=trim(addslashes(htmlentities($applicationTitle)));
+        if(($applicationTitle!="")&&($applicationTitle!=NULL))
+        {
+            $applicationDescription=trim(addslashes(htmlentities($applicationDescription)));
+            if(($applicationDescription!="")&&($applicationDescription!=NULL))
+            {
+                $userID=addslashes(htmlentities($userID));
+                userMaster::__construct($userID);
+                if($this->userValid)
+                {
+                    $am="SELECT idapplication_master FROM application_master WHERE stat!='0' WHERE application_title='$applicationTitle' AND application_description='$applicationDescription' AND user_master_iduser_master='$userID'";
+                    $am=$app['db']->fetchAssoc($am);
+                    if(($am=="")||($am==NULL))
+                    {
+                        $in="INSERT INTO application_master (timestamp,application_title,application_description,user_master_iduser_master) VALUES (NOW(),'$applicationTitle','$applicationDescription','$userID')";
+                        $in=$app['db']->executeQuery($in);
+                        return "APPLICATION_CREATED";
+                    }
+                    else
+                    {
+                        return "APPLICATION_ALREADY_EXISTS";
+                    }
+                }
+                else
+                {
+                    return "INVALID_USER_ID";
+                }
+            }
+            else
+            {
+                return "INVALID_APPLICATION_DESCRIPTION";
+            }
+        }
+        else
+        {
+            return "INVALID_APPLICATION_TITLE";
+        }
+    }
 }
 ?>
