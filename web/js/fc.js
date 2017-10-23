@@ -41,6 +41,7 @@ app.controller('apps',function($scope,$http,$compile){
             method: 'GET',
             url: 'getApplications'
         }).then(function success(response){
+            console.log(response);
             response=response.data;
             if(($.trim(response)!="")&&($.trim(response)!="INVALID_PARAMETERS")){
                 if($.trim(response)=="INVALID_USER_ID"){
