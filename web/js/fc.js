@@ -42,17 +42,11 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             response=response.data;
-            if($.isArray(response)){
-                
-            }
-            else{
-                response=$.trim(response);
-            }
-            if((response!="")&&(response!="INVALID_PARAMETERS")){
-                if(response=="INVALID_USER_ID"){
+            if(($.trim(response)!="")&&($.trim(response)!="INVALID_PARAMETERS")){
+                if($.trim(response)=="INVALID_USER_ID"){
                     window.location='logout';
                 }
-                else if(response=="NO_APPLICATIONS_FOUND"){
+                else if($.trim(response)=="NO_APPLICATIONS_FOUND"){
                     var p=document.createElement("p");
                     $(p).html("No applications found.");
                     $("#appHolder").html(p);
