@@ -22,6 +22,7 @@ class applicationMaster extends userMaster
     }
     function verifyApplication()
     {
+        $app=$this->app;
         if($this->application_id!=NULL)
         {
             $appID=$this->application_id;
