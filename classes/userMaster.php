@@ -66,6 +66,7 @@ class userMaster
     }
     function getUserIDFromEmail($userEmail)
     {
+        $app=$this->app;
         $userEmail=addslashes(htmlentities($userEmail));
         $um="SELECT iduser_master FROM user_master WHERE stat='1' AND user_email='$userEmail'";
         $um=$app['db']->fetchAssoc($um);
