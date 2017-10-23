@@ -67,11 +67,11 @@ $app->post('/login_action',function(Request $request) use($app){
     $response=$user->authenticateUser($request->get('user_email'),$request->get('user_password'));
     if($response=="AUTHENTICATE_USER")
     {
-        $app->redirect('/applications');
+        return $app->redirect('/applications');
     }
     else
     {
-        $app->redirect('/login/error');
+        return $app->redirect('/login/error');
     }
 });
 
