@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <body ng-app="applications">
-    <div class="container-fluid" ng-controller="apps" ng-init="appCount=0">
+    <div class="container-fluid" ng-controller="apps">
         <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;">
-        <h3>Applications created by you ({{appCount}})</h3>
+        <h3>Applications created by you ({{appCount}})&nbsp;<button type="button" class="btn btn-primary">Create application</button>&nbsp;<button type="button" class="btn btn-default">Log out</button></h3>
         <div id="appHolder" ng-init="getApplications()"></div>
     </div>
     <div class="container-fluid">

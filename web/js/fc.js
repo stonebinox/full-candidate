@@ -34,13 +34,22 @@ app.controller('create',function($scope){
     };
 });
 var app=angular.module('applications',[]);
-app.controller('apps',function($scope){
+app.controller('apps',function($scope,$http){
     $scope.applicationArray=[];
     $scope.application_id=null;
+    $scope.appCount=0;
     $scope.getApplications=function(){
-
+        $http({
+            method: 'GET',
+            url: 'getApplications'
+        }).then(function success(response){
+            response=response.data;
+            console.log(response);
+        }, function error(response){
+            messageBox("Problem","Something went wrong while loading your list of applications. Please try again later. This is the error we see: "+response);
+        });
     }; 
     $scope.displayApplications=function(){
-        
+
     };
 });
