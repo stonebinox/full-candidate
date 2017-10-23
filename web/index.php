@@ -89,5 +89,26 @@ $app->get('/logout',function() use($app){
     }
     return $app->redirect('/login');
 });
+$app->get('/getApplications',function() use($app){
+    if($app['session']->get('uid'))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/applicationMaster.php");
+        $application=new applicationMaster;
+        $applications=$application->getApplications($app['session']->get('uid'));
+        if(is_array($applications))
+        {
+            return json_encode($applications);
+        }
+        else
+        {
+            return $applications;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>

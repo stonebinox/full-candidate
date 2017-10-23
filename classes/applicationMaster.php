@@ -6,7 +6,7 @@ Last Modified: 21/10/17 22:58
 Comments: Main class file for 
 application_master table.
 ---------------------------------*/
-class applicationMaster
+class applicationMaster extends userMaster
 {
     public $app=NULL;
     public $applicationValid=false;
@@ -25,11 +25,20 @@ class applicationMaster
         if($this->application_id!=NULL)
         {
             $appID=$this->application_id;
-            $am="SELECT idapplication_master FROM application_master WHERE stat='1' AND idapplication_master='$appID'";
+            $am="SELECT idapplication_master,user_master_iduser_master FROM application_master WHERE stat='1' AND idapplication_master='$appID'";
             $am=$app['db']->fetchAssoc($am);
             if(($am!="")&&($am!=NULL))
             {
-                return true;
+                $userID=$am['user_master_iduser_master'];
+                userMaster::__construct($userID);
+                if($this->userValid)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -63,29 +72,38 @@ class applicationMaster
             return "INVALID_APPLICATION_ID";
         }
     }
-    function getApplications() //to get application
+    function getApplications($userID) //to get application
     {
         $app=$this->app;
-        $am="SELECT idapplication_master FROM application_master WHERE stat='1' ORDER BY idapplication_master DESC LIMIT 100";
-        $appArray=array();
-        $am=$app['db']->fetchAssoc($am);
-        for($i=0;$i<count($am);$i++)
+        $userID=addslashes(htmlentities($userID));
+        userMaster::__construct($userID);
+        if($this->userValid)
         {
-            $appID=$am['idapplication_master'];
-            $this->__construct($appID);
-            $application=$this->getApplication();
-            if(is_array($application))
+            $am="SELECT idapplication_master FROM application_master WHERE stat='1' AND user_master_iduser_master='$userID' ORDER BY idapplication_master DESC LIMIT 100";
+            $appArray=array();
+            $am=$app['db']->fetchAssoc($am);
+            for($i=0;$i<count($am);$i++)
             {
-                array_push($appArray,$application);
+                $appID=$am['idapplication_master'];
+                $this->__construct($appID);
+                $application=$this->getApplication();
+                if(is_array($application))
+                {
+                    array_push($appArray,$application);
+                }
             }
-        }
-        if(count($appArray)>0)
-        {
-            return $appArray;
+            if(count($appArray)>0)
+            {
+                return $appArray;
+            }
+            else
+            {
+                return "NO_APPLICATIONS_FOUND";
+            }
         }
         else
         {
-            return "NO_APPLICATIONS_FOUND";
+            return "INVALID_USER_ID";
         }
     }
 }

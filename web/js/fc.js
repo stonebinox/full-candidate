@@ -52,4 +52,28 @@ app.controller('apps',function($scope,$http){
     $scope.displayApplications=function(){
 
     };
+    $scope.createApplicationForm=function(){
+        var form=document.createElement("form");
+        $(form).attr("method","post");
+        $(form).attr("action","createApplication");
+        $(form).attr("autocomplete","off");
+        $(form).attr("name","createapp");
+            var appTitleGroup=document.createElement("div");
+            $(appTitleGroup).addClass("form-group");
+                var appTitleLabel=document.createElement("label");
+                $(appTitleLabel).attr("for","apptitle");
+                $(appTitleLabel).html("Application title");
+                $(appTitleGroup).append(appTitleLabel);
+                var appTitle=document.createElement("input");
+                $(appTitle).attr("type","text");
+                $(appTitle).addClass("form-control");
+                $(appTitle).attr("id","apptitle");
+                $(appTitle).attr("name","apptitle");
+                $(appTitle).attr("placeholder","Enter a valid application name");
+                $(appTitle).attr("required","true");
+                $(appTitleGroup).append(appTitle);
+            $(form).append(appTitleGroup);
+        messageBox("Create Application",form);
+        $compile("#myModal")($scope);
+    };
 });
