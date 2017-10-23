@@ -34,7 +34,7 @@ app.controller('create',function($scope){
     };
 });
 var app=angular.module('applications',[]);
-app.controller('apps',function($scope,$http){
+app.controller('apps',function($scope,$http,$compile){
     $scope.applicationArray=[];
     $scope.application_id=null;
     $scope.appCount=0;
@@ -44,12 +44,25 @@ app.controller('apps',function($scope,$http){
             url: 'getApplications'
         }).then(function success(response){
             response=response.data;
-            console.log(response);
+            if(response=="INVALID_USER_ID"){
+                window.location='logout';
+            }
+            else if(response=="NO_APPLICATIONS_FOUND"){
+                var p=document.createElement("p");
+                $(p).html("No applications found.");
+                $("#appHolder").html(p);
+            }
+            else{
+                response=JSON.parse(response);
+                $scope.applicationArray=response.slice();
+                $scope.displayApplications();
+            }
         }, function error(response){
             messageBox("Problem","Something went wrong while loading your list of applications. Please try again later. This is the error we see: "+response);
         });
     }; 
     $scope.displayApplications=function(){
+        var applications=$scope.applicationArray.slice();
 
     };
     $scope.createApplicationForm=function(){
@@ -73,6 +86,20 @@ app.controller('apps',function($scope,$http){
                 $(appTitle).attr("required","true");
                 $(appTitleGroup).append(appTitle);
             $(form).append(appTitleGroup);
+            var appDescGroup=document.createElement("div");
+            $(appDescGroup).addClass("form-group");
+                var appDescLabel=document.createElement("label");
+                $(appDescLabel).attr("for","appdesc");
+                $(appDescLabel).html("Application description");
+                $(appDescGroup).append(appDescLabel);
+                var appDescTA=document.createElement("textarea");
+                $(appDescTA).addClass("form-control");
+                $(appDescTA).attr("rows","5");
+                $(appDescTA).attr("id","appdesc");
+                $(appDescTA).attr("name","appdesc");
+                $(appDescTA).attr("placeholder","Enter some description of this application.");
+                $(appDescGroup).append(appDescTA);
+            $(form).append(appDescGroup);
         messageBox("Create Application",form);
         $compile("#myModal")($scope);
     };
