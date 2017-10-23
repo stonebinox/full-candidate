@@ -57,10 +57,8 @@ $app->get('/applications',function() use($app){
     }
 });
 
-$app->get('/login/{err}',function() use($app){
-    return $app['twig']->render('index.html.twig',[
-        'error' => $err
-    ]); 
+$app->get('/login',function() use($app){
+    return $app['twig']->render('index.html.twig'); 
 });
 
 $app->post('/login_action',function(Request $request) use($app){
