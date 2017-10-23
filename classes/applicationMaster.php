@@ -119,7 +119,7 @@ class applicationMaster extends userMaster
                 userMaster::__construct($userID);
                 if($this->userValid)
                 {
-                    $am="SELECT idapplication_master FROM application_master WHERE stat!='0' WHERE application_title='$applicationTitle' AND application_description='$applicationDescription' AND user_master_iduser_master='$userID'";
+                    $am="SELECT idapplication_master FROM application_master WHERE stat!='0' AND application_title='$applicationTitle' AND application_description='$applicationDescription' AND user_master_iduser_master='$userID'";
                     $am=$app['db']->fetchAssoc($am);
                     if(($am=="")||($am==NULL))
                     {
