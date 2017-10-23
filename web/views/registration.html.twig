@@ -4,7 +4,7 @@
     <div class="container-fluid" ng-controller="create">
         <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;">
         <h3>Create an account</h3>
-        <form method="post" action="create_account" autocomplete="off">
+        <form method="post" action="create_account" autocomplete="off" name="accountform">
             <div class="form-group">
                 <label for="email">Full name</label>
                 <input type="email" class="form-control" id="text" name="user_name" placeholder="Enter a valid name">
@@ -21,7 +21,7 @@
                 <label for="pwd">Repeat password</label>
                 <input type="password" class="form-control" id="pwd" name="user_password2" placeholder="Repeat the above password">
             </div>
-            <button type="submit" class="btn btn-primary">Create account</button>&nbsp;&nbsp;<input type="button" value="Already have an account?" class="btn" onclick="window.location='login';">
+            <button type="button" class="btn btn-primary" ng-click="validateForm()">Create account</button>&nbsp;&nbsp;<input type="button" value="Already have an account?" class="btn" onclick="window.location='login';">
         </form>
     </div>
     <div class="container-fluid">
