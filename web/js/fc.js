@@ -1,7 +1,5 @@
 var app=angular.module('login',[]);
-app.controller('auth',function($scope){
-    
-});
+app.controller('auth',function($scope){});
 var app=angular.module('registration',[]);
 app.controller('create',function($scope){
     $scope.validateForm=function(){
@@ -44,6 +42,7 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             response=$.trim(response.data);
+            console.log(response);
             if((response!="")&&(response!="INVALID_PARAMETERS")){
                 if(response=="INVALID_USER_ID"){
                     window.location='logout';
@@ -60,7 +59,7 @@ app.controller('apps',function($scope,$http,$compile){
                 }
             }
             else{
-                window.location="logout";
+                messageBox("Problem","Something went wrong while loading your list of applications.");
             }
         }, function error(response){
             messageBox("Problem","Something went wrong while loading your list of applications. Please try again later. This is the error we see: "+response);
