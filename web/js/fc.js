@@ -1,4 +1,4 @@
-var app=angular.module('application',[]);
-app.controller('login',function($scope){
+var app=angular.module('login',[]);
+app.controller('auth',function($scope){
     
 });
