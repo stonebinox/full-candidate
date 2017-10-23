@@ -53,6 +53,7 @@ app.controller('apps',function($scope,$http,$compile){
                 $("#appHolder").html(p);
             }
             else{
+                console.log(response);
                 response=JSON.parse(response);
                 $scope.applicationArray=response.slice();
                 $scope.displayApplications();
