@@ -42,7 +42,10 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             response=response.data;
-            if(!$.isArray(response)){
+            if($.isArray(response)){
+                
+            }
+            else{
                 response=$.trim(response);
             }
             if((response!="")&&(response!="INVALID_PARAMETERS")){
