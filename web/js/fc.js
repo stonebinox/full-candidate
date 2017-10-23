@@ -102,6 +102,11 @@ app.controller('apps',function($scope,$http,$compile){
                 $(appDescTA).attr("placeholder","Enter some description of this application.");
                 $(appDescGroup).append(appDescTA);
             $(form).append(appDescGroup);
+            var button=document.createElement("button");
+            $(button).attr("type","button");
+            $(button).addClass("btn btn-primary pull-right");
+            $(button).html("Create");
+            $(form).append(button);
         messageBox("Create Application",form);
         $compile("#myModal")($scope);
     };
