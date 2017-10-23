@@ -119,7 +119,7 @@ app.controller('apps',function($scope,$http,$compile){
         var appTitle=$.trim(document.createapp.apptitle.value);
         if(appTitle!=""){
             $("#apptitlegroup").removeClass("has-error");
-            var appDesc=$.trim(document.createpp.appdesc.value);
+            var appDesc=$.trim(document.createapp.appdesc.value);
             if(appDesc!=""){
                 $("#appdescgroup").removeClass("has-error");
                 var dt=new Date().getTime();
