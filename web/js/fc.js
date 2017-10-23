@@ -41,8 +41,8 @@ app.controller('apps',function($scope,$http,$compile){
             method: 'GET',
             url: 'getApplications'
         }).then(function success(response){
-            response=$.trim(response.data);
             console.log(response);
+            response=$.trim(response.data);
             if((response!="")&&(response!="INVALID_PARAMETERS")){
                 if(response=="INVALID_USER_ID"){
                     window.location='logout';
