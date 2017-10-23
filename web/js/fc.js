@@ -75,6 +75,7 @@ app.controller('apps',function($scope,$http,$compile){
         $(form).attr("name","createapp");
             var appTitleGroup=document.createElement("div");
             $(appTitleGroup).addClass("form-group");
+            $(appTitleGroup).attr("id","apptitlegroup");
                 var appTitleLabel=document.createElement("label");
                 $(appTitleLabel).attr("for","apptitle");
                 $(appTitleLabel).html("Application title");
@@ -90,6 +91,7 @@ app.controller('apps',function($scope,$http,$compile){
             $(form).append(appTitleGroup);
             var appDescGroup=document.createElement("div");
             $(appDescGroup).addClass("form-group");
+            $(appDescGroup).attr("id","appdescgroup");
                 var appDescLabel=document.createElement("label");
                 $(appDescLabel).attr("for","appdesc");
                 $(appDescLabel).html("Application description");
@@ -104,10 +106,29 @@ app.controller('apps',function($scope,$http,$compile){
             $(form).append(appDescGroup);
             var button=document.createElement("button");
             $(button).attr("type","button");
-            $(button).addClass("btn btn-primary pull-right");
+            $(button).addClass("btn btn-primary");
+            $(button).attr("ng-click","createApplication()");
             $(button).html("Create");
             $(form).append(button);
         messageBox("Create Application",form);
         $compile("#myModal")($scope);
+        $("#apptitle").focus();
+    };
+    $scope.createApplication=function(){
+        var appTitle=$.trim(document.createapp.apptitle.value);
+        if(appTitle!=""){
+            $("#apptitlegroup").removeClass("has-error");
+            var appDesc=$.trim(document.createAttribute.appdesc.value);
+            if(appDesc!=""){
+                $("#appdescgroup").removeClass("has-error");
+                document.createapp.submit();
+            }
+            else{
+                $("#appdescgroup").addClass("has-error");
+            }
+        }
+        else{
+            $("#apptitlegroup").addClass("has-error");
+        }
     };
 });
