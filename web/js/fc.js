@@ -72,8 +72,6 @@ app.controller('apps',function($scope,$http,$compile){
     };
     $scope.createApplicationForm=function(){
         var form=document.createElement("form");
-        $(form).attr("method","post");
-        $(form).attr("action","createApplication");
         $(form).attr("autocomplete","off");
         $(form).attr("name","createapp");
             var appTitleGroup=document.createElement("div");
@@ -124,7 +122,49 @@ app.controller('apps',function($scope,$http,$compile){
             var appDesc=$.trim(document.createpp.appdesc.value);
             if(appDesc!=""){
                 $("#appdescgroup").removeClass("has-error");
-                document.createapp.submit();
+                var dt=new Date().getTime();
+                $.ajax({
+                    url:"createApplication",
+                    method: "POST",
+                    data: {
+                        application_title: appTitle,
+                        application_decscription: appDesc,
+                        dt: dt
+                    },
+                    error: function(xhr,stat,err){
+                        messageBox("Problem","Something went wrong while creating this application. Please try again in a bit. This is the error we see: "+err);
+                    },
+                    success:function(responseText){
+                        $("#myModal").find("btn-primary").removeClass("disabled");
+                        if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
+                            if(responseText=="INVALID_USER_ID"){
+                                window.location="logout";
+                            }
+                            else if(responseText=="INVALID_APPLICATION_TITLE"){
+                                $("#apptitlegroup").addClass("has-error");
+                            }
+                            else if(responseText=="INVALID_APPLICATION_DESCRIPTION"){
+                                $("#appdescgroup").addClass("has-error");
+                            }
+                            else if(responseText=="APPLICATION_ALREADY_EXISTS"){
+                                messageBox("Application Exists","This application already exists.");
+                            }
+                            else if(responseText=="APPLICATION_CREATED"){
+                                messageBox("Application Created","Your application was created successfully. Once you add fields to your application, you may make it live so that potential candidates may see it.");
+                                $scope.getApplications();
+                            }
+                            else{
+                                messageBox("Problem","Something went wrong while creating your application. This is the error we see: "+responseText);
+                            }
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while searching for workspaces. Please try again in a bit. This is the error we see: "+err,0);
+                        }
+                    },
+                    beforeSend:function(){
+                        $("#myModal").find("btn-primary").addClass("disabled");
+                    }
+                });
             }
             else{
                 $("#appdescgroup").addClass("has-error");

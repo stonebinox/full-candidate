@@ -116,7 +116,7 @@ $app->post("/createApplication",function(Request $request) use($app){
         require("../classes/userMaster.php");
         require("../classes/applicationMaster.php");
         $application=new applicationMaster;
-        $response=$application->createApplication($request->get("uid"));
+        $response=$application->createApplication($request->get("application_title"),$request->get("application_description"),$app['session']->get("uid"));
         return $response;
     }
     else
