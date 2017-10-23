@@ -174,5 +174,21 @@ class userMaster
             return "INVALID_USER_NAME";
         }
     }
+    function logoutUser() //to log a user out
+    {
+        if($this->userValid)
+        {
+            $app=$this->app;
+            $userID=$this->user_id;
+            $um="UPDATE user_master SET online_flag='0' WHERE iduser_master='$userID'";
+            $um=$app['db']->executeUpdate($um);
+            $app['session']->remove("uid");
+            return "USER_LOGGED_OUT";
+        }
+        else
+        {
+            return "INVALID_USER_ID";
+        }
+    }
 }
 ?> 

@@ -1,22 +1,18 @@
 <?php
 
 ini_set('display_errors', 1);
-
 require_once __DIR__.'/../vendor/autoload.php';
-
 $app = require __DIR__.'/../src/app.php';
 require __DIR__.'/../config/prod.php';
 require __DIR__.'/../src/controllers.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => 'php://stderr',
-  ));
+));
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
-
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
       'driver' => 'pdo_mysql',
@@ -26,15 +22,12 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
       'host'=> "us-cdbr-iron-east-05.cleardb.net",
     )
 ));
-
 $app->register(new Silex\Provider\SessionServiceProvider, array(
     'session.storage.save_path' => dirname(__DIR__) . '/tmp/sessions'
 ));
-
 $app->before(function(Request $request) use($app){
     $request->getSession()->start();
 });
-
 $app->get('/', function() use($app){
     if($app['session']->get('uid')!=NULL)
     {
@@ -45,7 +38,6 @@ $app->get('/', function() use($app){
         return $app->redirect('/login');
     }
 });
-
 $app->get('/applications',function() use($app){
     if($app['session']->get('uid')!=NULL)
     {
@@ -56,11 +48,9 @@ $app->get('/applications',function() use($app){
         return $app->redirect('/login');
     }
 });
-
 $app->get('/login',function() use($app){
     return $app['twig']->render('index.html.twig'); 
 });
-
 $app->post('/login_action',function(Request $request) use($app){
     require("../classes/userMaster.php");
     $user=new userMaster;
@@ -74,11 +64,9 @@ $app->post('/login_action',function(Request $request) use($app){
         return $app->redirect('/login_error');
     }
 });
-
 $app->get('/registration',function() use($app){
     return $app['twig']->render('registration.html.twig');
 });
-
 $app->post('/create_account',function(Request $request) use($app){
     require("../classes/userMaster.php");
     $user=new userMaster;
@@ -92,6 +80,14 @@ $app->post('/create_account',function(Request $request) use($app){
         return $app->redirect('/registration');
     }
 });
-
+$app->get('/logout',function() use($app){
+    if($app['session']->get('uid'))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster($app['session']->get('uid'));
+        $response=$user->logoutUser();
+    }
+    return $app->redirect('/login');
+});
 $app->run();
 ?>
