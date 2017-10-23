@@ -135,7 +135,8 @@ app.controller('apps',function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while creating this application. Please try again in a bit. This is the error we see: "+err);
                     },
                     success:function(responseText){
-                        $("#myModal").find("btn-primary").removeClass("disabled");
+                        console.log(responseText);
+                        $("#myModal").find(".btn-primary").removeClass("disabled");
                         if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
                             if(responseText=="INVALID_USER_ID"){
                                 window.location="logout";
@@ -162,7 +163,7 @@ app.controller('apps',function($scope,$http,$compile){
                         }
                     },
                     beforeSend:function(){
-                        $("#myModal").find("btn-primary").addClass("disabled");
+                        $("#myModal").find(".btn-primary").addClass("disabled");
                     }
                 });
             }
