@@ -128,7 +128,7 @@ app.controller('apps',function($scope,$http,$compile){
                     method: "POST",
                     data: {
                         application_title: appTitle,
-                        application_decscription: appDesc,
+                        application_description: appDesc,
                         dt: dt
                     },
                     error: function(xhr,stat,err){
