@@ -47,11 +47,32 @@ $app->get('/', function() use($app){
 });
 
 $app->get('/applications',function() use($app){
-    return $app['twig']->render('applications.html.twig'); 
+    if($app['session']->get('uid')!=NULL)
+    {
+        return $app['twig']->render('applications.html.twig'); 
+    }
+    else
+    {
+        return $app->redirect('/login');
+    }
 });
 
 $app->get('/login',function() use($app){
     return $app['twig']->render('index.html.twig'); 
+});
+
+$app->post('/login_action',function(Request $request) use($app){
+    require("../classes/userMaster.php");
+    $user=new userMaster;
+    $response=$user->authenticateUser($request->get('user_email'),$request->get('user_password'));
+    if($response=="AUTHENTICATE_USER")
+    {
+        $app->redirect('/applications');
+    }
+    else
+    {
+        $app->redirect('/login/error');
+    }
 });
 
 $app->run();
