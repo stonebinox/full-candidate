@@ -7,19 +7,19 @@
         <form method="post" action="create_account" autocomplete="off" name="accountform">
             <div class="form-group">
                 <label for="email">Full name</label>
-                <input type="email" class="form-control" id="text" name="user_name" placeholder="Enter a valid name">
+                <input type="email" class="form-control" id="text" name="user_name" placeholder="Enter a valid name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter a valid email ID">
+                <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter a valid email ID" required>
             </div>
             <div class="form-group">
                 <label for="pwd">Password</label>
-                <input type="password" class="form-control" id="pwd" name="user_password" placeholder="Enter a valid password">
+                <input type="password" class="form-control" id="pwd" name="user_password" placeholder="Enter a valid password" required>
             </div>
             <div class="form-group">
                 <label for="pwd">Repeat password</label>
-                <input type="password" class="form-control" id="pwd" name="user_password2" placeholder="Repeat the above password">
+                <input type="password" class="form-control" id="pwd" name="user_password2" placeholder="Repeat the above password" required>
             </div>
             <button type="button" class="btn btn-primary" ng-click="validateForm()">Create account</button>&nbsp;&nbsp;<input type="button" value="Already have an account?" class="btn" onclick="window.location='login';">
         </form>

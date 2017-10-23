@@ -128,5 +128,51 @@ class userMaster
             return "INVALID_USER_CREDENTIALS";
         }
     }
+    function createAccount($userName,$userEmail,$userPassword,$userPassword2) //to create an account
+    {
+        $app=$this->app;
+        $userName=trim(addslashes(htmlentities($userName)));
+        if(($userName!="")&&($userName!=NULL))
+        {  
+            $userEmail=trim(addslashes(htmlentities($userEmail)));
+            if(filter_var($userEmail, FILTER_VALIDATE_EMAIL)){
+                if(strlen($userPassword)>=8)
+                {
+                    if($userPassword===$userPassword2)
+                    {
+                        $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail' AND stat!='0'";
+                        $um=$app['db']->fetchAssoc($um);
+                        if(($um=="")||($um==NULL))
+                        {
+                            $hashPassword=md5($userPassword);
+                            $in="INSERT INTO user_master (timestamp,user_name,user_email,user_password) VALUES (NOW(),'1','$userName,'$userEmail','$hashPassword')";
+                            $in=$app['db']->executeQuery($in);
+                            return "ACCOUNT_CREATED";
+                        }
+                        else
+                        {
+                            return "ACCOUNT_ALREADY_EXISTS";
+                        }
+                    }
+                    else
+                    {
+                        return "PASSWORD_MISMATCH";
+                    }
+                }
+                else
+                {
+                    return "INVALID_PASSWORD";
+                }
+            }
+            else
+            {
+                return "INVALID_USER_EMAIL";
+            }
+        }
+        else
+        {
+            return "INVALID_USER_NAME";
+        }
+    }
 }
 ?> 
