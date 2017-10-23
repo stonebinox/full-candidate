@@ -118,7 +118,7 @@ app.controller('apps',function($scope,$http,$compile){
         var appTitle=$.trim(document.createapp.apptitle.value);
         if(appTitle!=""){
             $("#apptitlegroup").removeClass("has-error");
-            var appDesc=$.trim(document.createAttribute.appdesc.value);
+            var appDesc=$.trim(document.createpp.appdesc.value);
             if(appDesc!=""){
                 $("#appdescgroup").removeClass("has-error");
                 document.createapp.submit();
