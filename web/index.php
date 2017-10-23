@@ -57,8 +57,10 @@ $app->get('/applications',function() use($app){
     }
 });
 
-$app->get('/login',function() use($app){
-    return $app['twig']->render('index.html.twig'); 
+$app->get('/login/{err}',function() use($app){
+    return $app['twig']->render('index.html.twig',[
+        'error' => $err
+    ]); 
 });
 
 $app->post('/login_action',function(Request $request) use($app){
@@ -71,8 +73,12 @@ $app->post('/login_action',function(Request $request) use($app){
     }
     else
     {
-        return $app->redirect('/login/error');
+        return $app->redirect('/login_error');
     }
+});
+
+$app->get('/registration',function() use($app){
+    return $app['twig']->render('registration.html.twig');
 });
 
 $app->run();

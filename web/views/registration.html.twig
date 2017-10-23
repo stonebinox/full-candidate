@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<body ng-app="registration">
+    <div class="container-fluid" ng-controller="create">
+        <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;">
+        <form method="post" action="create_account" autocomplete="off">
+            <div class="form-group">
+                <label for="email">Full name</label>
+                <input type="email" class="form-control" id="text" name="user_name" placeholder="Enter a valid name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter a valid email ID">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password</label>
+                <input type="password" class="form-control" id="pwd" name="user_password" placeholder="Enter a valid password">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Repeat password</label>
+                <input type="password" class="form-control" id="pwd" name="user_password2" placeholder="Repeat the above password">
+            </div>
+            <button type="submit" class="btn btn-primary">Create account</button>&nbsp;&nbsp;<input type="button" value="Already have an account?" class="btn" onclick="window.location='login';">
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div id="myModal" class="modal fade" role="dialog"></div>
+    </div>
+    <div id="footer" onclick="window.location='https://twitter.com/thedustmakers';"></div>
+</body>
+{% endblock %}
