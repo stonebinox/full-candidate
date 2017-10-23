@@ -33,3 +33,14 @@ app.controller('create',function($scope){
         }
     };
 });
+var app=angular.module('applications',[]);
+app.controller('apps',function($scope){
+    $scope.applicationArray=[];
+    $scope.application_id=null;
+    $scope.getApplications=function(){
+
+    }; 
+    $scope.displayApplications=function(){
+        
+    };
+});
