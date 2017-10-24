@@ -251,7 +251,7 @@ app.controller('apps',function($scope,$http,$compile){
                                 messageBox("Application Exists","This application already exists.");
                             }
                             else if(responseText=="APPLICATION_CREATED"){
-                                messageBox("Application Created","Your application was created successfully. Once you add fields to your application, you may make it live so that potential candidates may see it.");
+                                messageBox("Application Created","Your application was created successfully. Your application is not live, please make sure the details are correct before making it live on the jobs page.");
                                 $scope.getApplications();
                             }
                             else{
