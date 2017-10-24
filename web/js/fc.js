@@ -44,7 +44,6 @@ app.controller('apps',function($scope,$http,$compile){
             console.log(response);
             response=response.data;
             if($.isArray(response)){
-                response=JSON.parse(response);
                 $scope.applicationArray=response.slice();
                 $scope.displayApplications();
             }
