@@ -74,7 +74,7 @@ app.controller('apps',function($scope,$http,$compile){
         if(applications.length>0){
             var count=applications.length;
             $("#appCount").html(count);
-            $("appHolder").html("<hr>");
+            $("#appHolder").html("<hr>");
             var table=document.createElement("table");
             $(table).addClass("table");
                 var thead=document.createElement("thead");
