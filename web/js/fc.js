@@ -43,7 +43,6 @@ app.controller('apps',function($scope,$http,$compile){
         }).then(function success(response){
             if(typeof response=='object'){
                 response=response.data;
-                console.log(response);
                 $scope.applicationArray=response.slice();
                 $scope.displayApplications();
             }
@@ -75,6 +74,7 @@ app.controller('apps',function($scope,$http,$compile){
         if(applications.length>0){
             var count=applications.length;
             $("#appCount").html(count);
+            $("appHolder").html("<hr>");
             var table=document.createElement("table");
             $(table).addClass("table");
                 var thead=document.createElement("thead");
@@ -111,7 +111,10 @@ app.controller('apps',function($scope,$http,$compile){
                 }
                 var tr=document.createElement("tr");
                     var td1=document.createElement("td");
-                    $(td1).html(appTitle);   
+                        var a=document.createElement("a");
+                        $(a).attr("href","#");
+                        $(a).html(appTitle);
+                    $(td1).html(a);   
                 $(tr).append(td1);
                     var td2=document.createElement("td");
                     $(td2).html(appDesc);
@@ -129,7 +132,7 @@ app.controller('apps',function($scope,$http,$compile){
                 $(tbody).append(tr);
             }
             $(table).append(tbody);
-            $("#appHolder").html(table);
+            $("#appHolder").append(table);
         }
         else{
             var p=document.createElement("p");
