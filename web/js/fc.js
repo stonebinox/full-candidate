@@ -88,6 +88,9 @@ app.controller('apps',function($scope,$http,$compile){
                         var th3=document.createElement("th");
                         $(th3).html("Status");
                     $(tr1).append(th3);
+                        var th4=document.createElement("th");
+                        $(th4).html("Actions");
+                    $(tr1).append(th4);
                 $(thead).append(tr1);
             $(table).append(thead);
                 var tbody=document.createElement("tbody");
@@ -116,6 +119,13 @@ app.controller('apps',function($scope,$http,$compile){
                     var td3=document.createElement("td");
                     $(td3).html(stat);
                 $(tr).append(td3);
+                    var td4=document.createElement("td");
+                        var button=document.createElement("button");
+                        $(button).addClass("btn btn-default btn-sm");
+                        $(button).attr("type","button");
+                        $(button).html("Make live");
+                    $(td4).html(button);
+                $(tr).append(td4);
                 $(tbody).append(tr);
             }
             $(table).append(tbody);
