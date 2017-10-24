@@ -42,7 +42,6 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             console.log(response);
-            response=response.data;
             if($.isArray(response)){
                 $scope.applicationArray=response.slice();
                 $scope.displayApplications();
@@ -72,7 +71,60 @@ app.controller('apps',function($scope,$http,$compile){
     }; 
     $scope.displayApplications=function(){
         var applications=$scope.applicationArray.slice();
-
+        if(applications.length>0){
+            var count=applications.length;
+            $("#appCount").html(count);
+            var table=document.createElement("table");
+            $(table).addClass("table");
+                var thead=document.createElement("thead");
+                    var tr1=document.createElement("tr");
+                        var th1=document.createElement("th");
+                        $(th).html("Title");
+                    $(tr1).append(th);
+                        var th2=document.createElement("th");
+                        $(th2).html("Descriptiom");
+                    $(tr1).append(th2);
+                        var th3=document.createElement("th");
+                        $(th3).html("Status");
+                    $(tr1).append(th3);
+                $(thead).append(tr1);
+            $(table).append(thead);
+                var tbody=document.createElement("tbody");
+            for(var i=0;i<applications.length;i++){
+                var application=applications[i];
+                var appID=application.idapplication_master;
+                var appTitle=application.application_title;
+                var appDesc=application.application_description;
+                var stat=application.stat;
+                if(stat==1){    
+                    stat='Live';
+                }
+                else if(stat==2){
+                    stat='Incomplete';
+                }
+                else{
+                    stat='Deleted';
+                }
+                var tr=document.createElement("tr");
+                    var td1=document.createElement("td");
+                    $(td1).html(appTitle);   
+                $(tr).append(td1);
+                    var td2=document.createElement("td");
+                    $(td2).html(appDesc);
+                $(tr).append(td2);
+                    var td3=document.createElement("td");
+                    $(td3).html(stat);
+                $(tr).append(td3);
+                $(tbody).append(tr);
+            }
+            $(table).append(tbody);
+            $("#appHolder").html(table);
+        }
+        else{
+            var p=document.createElement("p");
+            $(p).html("No applications found.");
+            $("#appHolder").html(p);
+        }
     };
     $scope.createApplicationForm=function(){
         var form=document.createElement("form");

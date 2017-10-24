@@ -26,7 +26,7 @@ class applicationMaster extends userMaster
         if($this->application_id!=NULL)
         {
             $appID=$this->application_id;
-            $am="SELECT idapplication_master,user_master_iduser_master FROM application_master WHERE stat='1' AND idapplication_master='$appID'";
+            $am="SELECT idapplication_master,user_master_iduser_master FROM application_master WHERE stat!='0' AND idapplication_master='$appID'";
             $am=$app['db']->fetchAssoc($am);
             if(($am!="")&&($am!=NULL))
             {
@@ -57,10 +57,14 @@ class applicationMaster extends userMaster
         {
             $app=$this->app;
             $appID=$this->application_id;
-            $am="SELECT * FROM application_master WHERE stat='1' AND idapplication_master='$appID'";
+            $am="SELECT * FROM application_master WHERE idapplication_master='$appID'";
             $am=$app['db']->fetchAssoc($am);
             if(($am!="")&&($am!=NULL))
             {
+                $userID=$am['user_master_iduser_master'];
+                userMaster::__construct($userID);
+                $user=$this->getUser();
+                $am['user_master_iduser_master']=$user;
                 return $am;
             }
             else
@@ -80,7 +84,7 @@ class applicationMaster extends userMaster
         userMaster::__construct($userID);
         if($this->userValid)
         {
-            $am="SELECT idapplication_master FROM application_master WHERE stat='1' AND user_master_iduser_master='$userID' ORDER BY idapplication_master DESC LIMIT 100";
+            $am="SELECT idapplication_master FROM application_master WHERE stat!='0' AND user_master_iduser_master='$userID' ORDER BY idapplication_master DESC LIMIT 100";
             $appArray=array();
             $am=$app['db']->fetchAssoc($am);
             for($i=0;$i<count($am);$i++)
@@ -124,7 +128,7 @@ class applicationMaster extends userMaster
                     $am=$app['db']->fetchAssoc($am);
                     if(($am=="")||($am==NULL))
                     {
-                        $in="INSERT INTO application_master (timestamp,application_title,application_description,user_master_iduser_master) VALUES (NOW(),'$applicationTitle','$applicationDescription','$userID')";
+                        $in="INSERT INTO application_master (timestamp,stat,application_title,application_description,user_master_iduser_master) VALUES (NOW(),'2','$applicationTitle','$applicationDescription','$userID')";
                         $in=$app['db']->executeQuery($in);
                         return "APPLICATION_CREATED";
                     }
