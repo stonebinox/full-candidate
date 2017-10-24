@@ -43,23 +43,29 @@ app.controller('apps',function($scope,$http,$compile){
         }).then(function success(response){
             console.log(response);
             response=response.data;
-            if(($.trim(response)!="")&&($.trim(response)!="INVALID_PARAMETERS")){
-                if($.trim(response)=="INVALID_USER_ID"){
-                    window.location='logout';
-                }
-                else if($.trim(response)=="NO_APPLICATIONS_FOUND"){
-                    var p=document.createElement("p");
-                    $(p).html("No applications found.");
-                    $("#appHolder").html(p);
-                }
-                else{
-                    response=JSON.parse(response);
-                    $scope.applicationArray=response.slice();
-                    $scope.displayApplications();
-                }
+            if($.isArray(response)){
+                response=JSON.parse(response);
+                $scope.applicationArray=response.slice();
+                $scope.displayApplications();
             }
             else{
-                messageBox("Problem","Something went wrong while loading your list of applications.");
+                response=$.trim(response);
+                if((response!="")&&(response!="INVALID_PARAMETERS")){
+                    if(response=="INVALID_USER_ID"){
+                        window.location='logout';
+                    }
+                    else if(response=="NO_APPLICATIONS_FOUND"){
+                        var p=document.createElement("p");
+                        $(p).html("No applications found.");
+                        $("#appHolder").html(p);
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while loading your list of applications. This is the error we see: "+response);    
+                    }
+                }
+                else{
+                    messageBox("Problem","Something went wrong while loading your list of applications.");
+                }
             }
         }, function error(response){
             messageBox("Problem","Something went wrong while loading your list of applications. Please try again later. This is the error we see: "+response);
