@@ -514,9 +514,9 @@ app.controller("joblist",function($scope,$compile,$routeParams){
         }
     };
     $scope.getYoutubeVideo=function(url){
+        console.log(url);
         if(url.indexOf("http")!=-1){
             if(url.indexOf("youtube")!=-1){
-                //https://www.youtube.com/watch?v=vwFHZpwoYSk&t=142s
                 $("#youtubegroup").removeClass("has-error");
                 var sp=url.split("watch?v=");
                 var videoID=$.trim(sp[1]);
@@ -543,7 +543,7 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 var youtube=$.trim($("#youtube").val());
                 if((youtube!="")&&(youtube.indexOf(" ")==-1)){
                     $("#youtubegroup").removeClass("has-error");        
-                    
+
                 }
                 else{
                     $("#youtubegroup").addClass("has-error");        
