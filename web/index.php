@@ -152,5 +152,8 @@ $app->get('/deleteApplication',function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/jobs",function() use($app){
+    $app['twig']->render("jobs.html.twig");
+});
 $app->run();
 ?>

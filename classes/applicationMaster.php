@@ -89,8 +89,8 @@ class applicationMaster extends userMaster
             $am=$app['db']->fetchAll($am);
             for($i=0;$i<count($am);$i++)
             {
-                $application=$am[$i];
-                $appID=$application['idapplication_master'];
+                $applicationRow=$am[$i];
+                $appID=$applicationRow['idapplication_master'];
                 $this->__construct($appID);
                 $application=$this->getApplication();
                 if(is_array($application))
@@ -220,6 +220,40 @@ class applicationMaster extends userMaster
         else
         {
             return "INVALID_APPLICATION_ID";
+        }
+    }
+    function getLiveApplications($offset=0) //to get list of live applications
+    {
+        $app=$this->app;
+        $offset=addslashes(htmlentities($offset));
+        if(($offset!="")&&($offset!=NULL)&&(is_numeric($offset))&&($offset>=0))
+        {
+            $am="SELECT idapplication_master FROM application_master WHERE stat='1' ORDER BY idapplication_master DESC LIMIT $offset,100";
+            $am=$app['db']->fetchAll($am);
+            $appArray=array();
+            for($i=0;$i<count($am);$i++)
+            {
+                $applicationRow=$am[$i];
+                $appID=$applicationRow['idapplication_master'];
+                $this->__construct($appID);
+                $application=$this->getApplication();
+                if(is_array($application))
+                {
+                    array_push($appArray,$application);
+                }
+            }   
+            if(count($appArray)>0)
+            {
+                return $appArray;
+            }
+            else
+            {
+                return "NO_APPLICATIONS_FOUND";
+            }
+        }
+        else
+        {
+            return "INVALID_OFFSET_VALUE";
         }
     }
 }
