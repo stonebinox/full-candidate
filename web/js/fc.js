@@ -157,7 +157,8 @@ app.controller('apps',function($scope,$http,$compile){
             var well=document.createElement("div");
             $(well).addClass("well");
             $(well).html(table);
-            $("#appHolder").html(well);
+            $("#appHolder").html("<hr>");
+            $("#appHolder").append(well);
             $compile("#appHolder")($scope);
             $('[data-toggle="tooltip"]').tooltip({
                 trigger: 'hover'
