@@ -27,7 +27,7 @@ app.controller('create',function($scope){
             }
         }
         else{
-            messageBox("Invalid Name","Please enter a valid full name.");
+            messageBox("Invalid Name","Please enter a valid company name.");
         }
     };
 });
