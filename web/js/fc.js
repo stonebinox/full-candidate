@@ -114,6 +114,9 @@ app.controller('apps',function($scope,$http,$compile){
                         var a=document.createElement("a");
                         $(a).attr("href","#");
                         $(a).html(appTitle);
+                        $(a).attr("title","Open application");
+                        $(a).attr("data-toggle","tooltip");
+                        $(a).attr("data-placement","auto");
                     $(td1).html(a);   
                 $(tr).append(td1);
                     var td2=document.createElement("td");
@@ -133,6 +136,10 @@ app.controller('apps',function($scope,$http,$compile){
             }
             $(table).append(tbody);
             $("#appHolder").append(table);
+            $compile("#appHolder")($scope);
+            $('[data-toggle]="tooltip').tooltip({
+                trigger: hover
+            });
         }
         else{
             var p=document.createElement("p");
