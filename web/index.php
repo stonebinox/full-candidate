@@ -124,5 +124,19 @@ $app->post("/createApplication",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get('/makeApplicationLive',function(Request $request) use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/applicationMaster.php");
+        $application=new applicationMaster($request->get("application_id"));
+        $response=$application->makeApplicationLive();
+        return $response;
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>
