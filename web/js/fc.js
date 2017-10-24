@@ -472,43 +472,45 @@ app.controller("joblist",function($scope,$compile,$routeParams){
         }
     };
     $scope.openApplication=function(appID){
-        var jobs=$scope.jobArray.slice();
-        var pos=null;
-        for(var i=0;i<jobs.length;i++){
-            var job=jobs[i];
-            if(appID==job.idapplication_master){
-                pos=i;
-                break;
+        if((appID!="")&&(appID!=null)&&(appID!=undefined)){
+            var jobs=$scope.jobArray.slice();
+            var pos=null;
+            for(var i=0;i<jobs.length;i++){
+                var job=jobs[i];
+                if(appID==job.idapplication_master){
+                    pos=i;
+                    break;
+                }
             }
-        }
-        if(pos!=null){
-            var job=jobs[pos];
-            var jobTitle=stripslashes(job.application_title);
-            var jobDesc=nl2br(stripslashes(job.application_description));
-            var timestamp=job.timestamp;
-            var sp=timestamp.split(" ");
-            timestamp=dateFormat(sp[0])+" at "+sp[1];
-            var jobPoster=job.user_master_iduser_master;
-            var jobPosterName=stripslashes(jobPoster.user_name);
-            var well=document.createElement("div");
-            $(well).addClass("well");
-                var h5=document.createElement("h5");
-                $(h5).html("Job posted by");
-            $(well).append(h5);
-                var h3=document.createElement("h3");
-                $(h3).html(jobPosterName);
-            $(well).append(h3);
-            var mainDiv=document.createElement("div");
-            $(mainDiv).append(well);
-            var well2=document.createElement("div");
-            $(well2).addClass("well");
-            var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here"></div><button type="button" class="btn btn-primary">Apply</button></form>';
-            $(well2).html(txt);
-            $(mainDiv).append(well2);
-            messageBox(jobTitle,mainDiv);
-        }
-        else{
-            messageBox("Invalid Application","We were unable to find this job application. Please refresh the page and try again.");
+            if(pos!=null){
+                var job=jobs[pos];
+                var jobTitle=stripslashes(job.application_title);
+                var jobDesc=nl2br(stripslashes(job.application_description));
+                var timestamp=job.timestamp;
+                var sp=timestamp.split(" ");
+                timestamp=dateFormat(sp[0])+" at "+sp[1];
+                var jobPoster=job.user_master_iduser_master;
+                var jobPosterName=stripslashes(jobPoster.user_name);
+                var well=document.createElement("div");
+                $(well).addClass("well");
+                    var h5=document.createElement("h5");
+                    $(h5).html("Job posted by");
+                $(well).append(h5);
+                    var h3=document.createElement("h3");
+                    $(h3).html(jobPosterName);
+                $(well).append(h3);
+                var mainDiv=document.createElement("div");
+                $(mainDiv).append(well);
+                var well2=document.createElement("div");
+                $(well2).addClass("well");
+                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control"></div><button type="button" class="btn btn-primary">Apply</button></form>';
+                $(well2).html(txt);
+                $(mainDiv).append(well2);
+                messageBox(jobTitle,mainDiv);
+            }
+            else{
+                messageBox("Invalid Application","We were unable to find this job application. Please refresh the page and try again.");
+            }
         }
     };
 });
