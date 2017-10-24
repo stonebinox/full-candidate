@@ -283,6 +283,7 @@ app.controller('apps',function($scope,$http,$compile){
                     messageBox("Problem","Something went wrong while updating this application. Please try again in a bit. This is the error we see: "+err);
                 },
                 success:function(responseText){
+                    responseText=$.trim(responseText);
                     if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
                         if(responseText=="INVALID_APPLICATION_ID"){
                             messageBox("Invalid Application","The application you are trying to make changes to is invalid or doesn't exist.");
