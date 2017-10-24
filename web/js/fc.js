@@ -145,6 +145,7 @@ app.controller('apps',function($scope,$http,$compile){
                             var button2=document.createElement("button");
                             $(button2).addClass("btn btn-danger btn-xs");
                             $(button2).attr("type","button");
+                            $(button2).attr("ng-click","deleteApplication("+appID+")");
                             $(button2).html("Delete");
                         $(btnGroup).append(button2);
                     $(td4).html(btnGroup);
@@ -270,7 +271,7 @@ app.controller('apps',function($scope,$http,$compile){
         }
     };
     $scope.makeApplicationLive=function(appID){
-        if(confirm("Are you sure you want to perform this action")){
+        if(confirm("Are you sure you want to perform this action?")){
             var dt=new Date().getTime();
             $.ajax({
                 url:"makeApplicationLive",
@@ -292,7 +293,7 @@ app.controller('apps',function($scope,$http,$compile){
                             messageBox("No Permission","You do not have have permission to perform this action.");
                         }
                         else if(responseText=="APPLICATION_UPDATED"){
-                            messageBox("Application Update","Your application is now live! Candidates can now apply from the applications page.");
+                            messageBox("Application Update",'Your application is now live! Candidates can now apply from the <a href="jobs" target="_blank">jobs</a> page.');
                             $scope.getApplications();
                         }
                         else{
@@ -301,6 +302,43 @@ app.controller('apps',function($scope,$http,$compile){
                     }
                     else{
                         messageBox("Problem","Something went wrong while updating your application. Please try again in a bit. This is the error we see: "+responseText);
+                    }
+                }
+            });
+        }
+    };
+    $scope.deleteApplication=function(appID){
+        if(confirm("Are you sure you want to perform this action?")){
+            var dt=new Date().getTime();
+            $.ajax({
+                url:"deleteApplication",
+                method: "GET",
+                data: {
+                    application_id: appID,
+                    dt: dt
+                },
+                error: function(xhr,stat,err){
+                    messageBox("Problem","Something went wrong while deleting this application. Please try again in a bit. This is the error we see: "+err);
+                },
+                success:function(responseText){
+                    responseText=$.trim(responseText);
+                    if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
+                        if(responseText=="INVALID_APPLICATION_ID"){
+                            messageBox("Invalid Application","The application you are trying to make changes to is invalid or doesn't exist.");
+                        }
+                        else if(responseText=="NO_PERMISSION"){
+                            messageBox("No Permission","You do not have have permission to perform this action.");
+                        }
+                        else if(responseText=="APPLICATION_DELETED"){
+                            messageBox("Application Deleted",'The application was deleted successfully.');
+                            $scope.getApplications();
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while deleting your application. This is the error we see: "+responseText);
+                        }
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while deleting your application. Please try again in a bit. This is the error we see: "+responseText);
                     }
                 }
             });

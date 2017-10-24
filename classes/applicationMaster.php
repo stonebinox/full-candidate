@@ -198,5 +198,29 @@ class applicationMaster extends userMaster
             return "INVALID_APPLICATION_ID";
         }
     }
+    function deleteApplication() //to delete an application
+    {
+        if($this->applicationValid)
+        {
+            $app=$this->app;
+            $appID=$this->application_id;
+            $owner=$this->getApplicationOwner();
+            if($owner==$app['session']->get("uid"))
+            {
+                $up="UPDATE application_master SET stat='0' WHERE idapplication_master='$appID'";
+                $up=$app['db']->executeUpdate($up);
+                $this->applicationValid=false;
+                return "APPLICATION_DELETED";
+            }
+            else
+            {
+                return "NO_PERMISSION";
+            }
+        }
+        else
+        {
+            return "INVALID_APPLICATION_ID";
+        }
+    }
 }
 ?>
