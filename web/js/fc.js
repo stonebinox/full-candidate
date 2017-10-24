@@ -132,7 +132,7 @@ app.controller('apps',function($scope,$http,$compile){
                             $(button).addClass("btn btn-info btn-xs");
                             $(button).attr("type","button");
                             $(button).html("Make live");
-                            $(button).attr("ng-click","makeApplicationLive()");
+                            $(button).attr("ng-click","makeApplicationLive("+appID+")");
                             $(btnGroup).append(button);
                         }
                         else if(stat=="Live"){
@@ -292,6 +292,7 @@ app.controller('apps',function($scope,$http,$compile){
                         }
                         else if(responseText=="APPLICATION_UPDATED"){
                             messageBox("Application Update","Your application is now live! Candidates can now apply from the applications page.");
+                            $scope.getApplications();
                         }
                         else{
                             messageBox("Problem","Something went wrong while updating your application. This is the error we see: "+responseText);
