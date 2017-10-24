@@ -42,7 +42,8 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             if(typeof response=='object'){
-                $scope.applicationArray=response;
+                response=response.data;
+                $scope.applicationArray=response.slice();
                 $scope.displayApplications();
             }
             else{
