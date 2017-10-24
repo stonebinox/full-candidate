@@ -111,8 +111,9 @@ app.controller('apps',function($scope,$http,$compile){
                 var tr=document.createElement("tr");
                     var td1=document.createElement("td");
                         var a=document.createElement("a");
-                        $(a).attr("href","#!/job/"+appID);
+                        $(a).attr("href","jobs#!/job/"+appID);
                         $(a).html(appTitle);
+                        $(a).attr("target","_blank");
                         $(a).attr("title","Open application");
                         $(a).attr("data-toggle","tooltip");
                         $(a).attr("data-placement","auto");
@@ -346,7 +347,13 @@ app.controller('apps',function($scope,$http,$compile){
     };
 });
 var app=angular.module("jobs",['ngRoute']);
-app.controller("joblist",function($scope,$compile){
+app.config(function($routeProvider){
+    $routeProvider
+    .when("/job/:jobID",{
+        controller: 'joblist'
+    });
+});
+app.controller("joblist",function($scope,$compile,$routeParams){
     $scope.application_id=null;
     $scope.jobArray=[];
     $scope.jobOffset=0;
@@ -389,6 +396,10 @@ app.controller("joblist",function($scope,$compile){
         });
     };
     $scope.displayJobs=function(){
+        if($routeParams.length!=0){
+            var jobID=$routeParams.jobID;
+            $scope.openApplication(jobID);
+        }
         var jobs=$scope.jobArray.slice();
         if(jobs.length>0){
             var table=document.createElement("table");
@@ -429,7 +440,7 @@ app.controller("joblist",function($scope,$compile){
                         $(a).attr("data-toggle","tooltip");
                         $(a).attr("data-placement","auto");
                         $(a).attr("ng-click","openApplication("+appID+")");
-                    $(td1).html(a);   
+                    $(td1).html(a);  
                 $(tr).append(td1);
                     var td2=document.createElement("td");
                     $(td2).html(appDesc);
