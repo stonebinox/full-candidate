@@ -503,7 +503,7 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 $(mainDiv).append(well);
                 var well2=document.createElement("div");
                 $(well2).addClass("well");
-                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control" ng-blur="getYoutubeVideo(this.value)"></div><div id="youtuberesult"></div><button type="button" class="btn btn-primary">Apply</button></form>';
+                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control" ng-blur="getYoutubeVideo()"></div><div id="youtuberesult"></div><button type="button" class="btn btn-primary">Apply</button></form>';
                 $(well2).html(txt);
                 $(mainDiv).append(well2);
                 messageBox(jobTitle,mainDiv);
@@ -513,7 +513,8 @@ app.controller("joblist",function($scope,$compile,$routeParams){
             }
         }
     };
-    $scope.getYoutubeVideo=function(url){
+    $scope.getYoutubeVideo=function(){
+        var url=$.trim($("#youtube").val());
         console.log(url);
         if(url.indexOf("http")!=-1){
             if(url.indexOf("youtube")!=-1){
