@@ -356,7 +356,7 @@ app.controller("joblist",function($scope,$compile){
             url:"getLiveApplications",
             method: "GET",
             data: {
-                offset: $scope.offset,
+                offset: $scope.jobOffset,
                 dt: dt
             },
             error: function(xhr,stat,err){
@@ -368,7 +368,7 @@ app.controller("joblist",function($scope,$compile){
                     responseText=JSON.parse(responseText);
                     $scope.jobArray=responseText.slice();
                     $scope.displayJobs();
-                    $scope.offset+=100;
+                    $scope.jobOffset+=100;
                 }
                 else{
                     responseText=$.trim(responseText);
