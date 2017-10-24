@@ -43,7 +43,7 @@ app.controller('apps',function($scope,$http,$compile){
         }).then(function success(response){
             if(typeof response=='object'){
                 console.log("here");
-                $scope.applicationArray=response.slice();
+                $scope.applicationArray=response;
                 $scope.displayApplications();
             }
             else{
