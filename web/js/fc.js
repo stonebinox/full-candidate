@@ -83,7 +83,7 @@ app.controller('apps',function($scope,$http,$compile){
                         $(th1).html("Title");
                     $(tr1).append(th1);
                         var th2=document.createElement("th");
-                        $(th2).html("Descriptiom");
+                        $(th2).html("Description");
                     $(tr1).append(th2);
                         var th3=document.createElement("th");
                         $(th3).html("Status");
