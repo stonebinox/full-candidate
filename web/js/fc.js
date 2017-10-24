@@ -42,7 +42,6 @@ app.controller('apps',function($scope,$http,$compile){
             url: 'getApplications'
         }).then(function success(response){
             if(typeof response=='object'){
-                console.log("here");
                 $scope.applicationArray=response;
                 $scope.displayApplications();
             }
@@ -70,7 +69,8 @@ app.controller('apps',function($scope,$http,$compile){
         });
     }; 
     $scope.displayApplications=function(){
-        var applications=$scope.applicationArray.slice();
+        var applications=$scope.applicationArray;
+        console.log(applications);
         if(applications.length>0){
             var count=applications.length;
             $("#appCount").html(count);
