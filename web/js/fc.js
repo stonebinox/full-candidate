@@ -96,8 +96,8 @@ app.controller('apps',function($scope,$http,$compile){
             for(var i=0;i<applications.length;i++){
                 var application=applications[i];
                 var appID=application.idapplication_master;
-                var appTitle=application.application_title;
-                var appDesc=application.application_description;
+                var appTitle=stripslashes(application.application_title);
+                var appDesc=nl2br(stripslashes(application.application_description));
                 var stat=application.stat;
                 if(stat==1){    
                     stat='Live';

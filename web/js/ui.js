@@ -45,3 +45,31 @@ function messageBox(title,content,sizeFlag){
 	$(modal).append(dialog);
 	$("#myModal").modal("show");
 }
+function nl2br (str) {
+    var breakTag = '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+function dateFormat(date){ //to format dates from database
+	var sp=date.split("-");
+	var yr=sp[0];
+	var month=sp[1];
+	var day=sp[2];
+	var monthArray=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+	month=monthArray[parseInt(month)-1];
+	date=day+" "+month+", "+yr;
+	return date;
+}
+function stripslashes(str){ 
+	return (str + '').replace(/\\(.?)/g, function (s, n1) {
+	  switch (n1) {
+	  case '\\':
+		return '\\';
+	  case '0':
+		return '\u0000';
+	  case '':
+		return '';
+	  default:
+		return n1;
+	  }
+	});
+}
