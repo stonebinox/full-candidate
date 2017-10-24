@@ -506,7 +506,7 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 $(mainDiv).append(well);
                 var well2=document.createElement("div");
                 $(well2).addClass("well");
-                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control" ng-blur="getYoutubeVideo()"></div><div id="youtuberesult"></div><button type="button" class="btn btn-primary">Apply</button></form>';
+                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control" ng-blur="getYoutubeVideo()"></div><div id="youtuberesult"></div><button type="button" class="btn btn-primary" ng-click="applyJob()">Apply</button></form>';
                 $(well2).html(txt);
                 $(mainDiv).append(well2);
                 messageBox(jobTitle,mainDiv);
@@ -550,7 +550,54 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 var youtube=$.trim($("#youtube").val());
                 if((youtube!="")&&(youtube.indexOf(" ")==-1)){
                     $("#youtubegroup").removeClass("has-error");        
-
+                    var dt=new Date().getTime();
+                    $.ajax({
+                        url:"applyJob",
+                        method: "POST",
+                        data: {
+                            user_email: userEmail,
+                            user_name: userName,
+                            youtube: youtube,
+                            application_id: jobID,
+                            dt: dt
+                        },
+                        error: function(xhr,stat,err){
+                            messageBox("Problem","Something went wrong while applying for this job. Please try again in a bit. This is the error we see: "+err);
+                        },
+                        success:function(responseText){
+                            $("#myModal").find("btn-primary").removeClass("disabled");
+                            responseText=$.trim(responseText);
+                            if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
+                                if(responseText=="INVALID_APPLICATION_ID"){
+                                    messageBox("Invalid Application","The application you are trying to make changes to is invalid or doesn't exist.");
+                                }
+                                else if(responseText=="INVALID_EMAIL_ID"){
+                                    messageBox("Invalid Email","The email ID you have entered is invalid. Please try again.");
+                                }
+                                else if(responseText=="INVALID_USER_NAME"){
+                                    messageBox("Invalid Name","Please enter a valid user name.");
+                                }
+                                else if(responseText=="INVALID_YOUTUBE_URL"){
+                                    messageBox("Invalid Youtube","Please enter a valid Youtube URL.");
+                                }
+                                else if(responseText=="RESPONSE_ALREADY_EXISTS"){
+                                    messageBox("Already Applied","You seem to have already applied for this position.");
+                                }
+                                else if(responseText="RESPONSE_SUBMITTED"){
+                                    messageBox("Application Submitted","Your job application has been submitted successfully. The company has been notified of your application.");
+                                }
+                                else{
+                                    messageBox("Problem","Something went wrong while applying for this job. Please try again in a bit. This is the error we see: "+responseText);
+                                }
+                            }
+                            else{
+                                messageBox("Problem","Something went wrong while deleting your application. Please try again in a bit. This is the error we see: "+responseText);
+                            }
+                        },
+                        beforeSend:function(){
+                            $("#myModal").find("btn-primary").addClass("disabled");
+                        }
+                    });
                 }
                 else{
                     $("#youtubegroup").addClass("has-error");        
@@ -563,6 +610,5 @@ app.controller("joblist",function($scope,$compile,$routeParams){
         else{
             $("#appemailgroup").addClass("has-error");
         }
-
     };
 });
