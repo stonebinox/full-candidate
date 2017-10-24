@@ -1,5 +1,5 @@
 function getYoutubeVideo(){
-    angular.element(document.getElementById("youtube")).scope().getYoutubeVideo();
+    angular.element(document.getElementById("youtubegroup")).scope().getYoutubeVideo();
 }
 var app=angular.module('login',[]);
 app.controller('auth',function($scope){});
