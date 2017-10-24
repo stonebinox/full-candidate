@@ -89,6 +89,7 @@ class applicationMaster extends userMaster
             $am=$app['db']->fetchAssoc($am);
             for($i=0;$i<count($am);$i++)
             {
+                echo "here";
                 $appID=$am['idapplication_master'];
                 $this->__construct($appID);
                 $application=$this->getApplication();
