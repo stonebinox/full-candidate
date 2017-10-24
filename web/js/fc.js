@@ -503,7 +503,7 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 $(mainDiv).append(well);
                 var well2=document.createElement("div");
                 $(well2).addClass("well");
-                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control"></div><button type="button" class="btn btn-primary">Apply</button></form>';
+                var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID" class="form-control"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name" class="form-control"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here" class="form-control" ng-blur="getYoutubeVideo(this.value)"></div><div id="youtuberesult"></div><button type="button" class="btn btn-primary">Apply</button></form>';
                 $(well2).html(txt);
                 $(mainDiv).append(well2);
                 messageBox(jobTitle,mainDiv);
@@ -512,5 +512,50 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 messageBox("Invalid Application","We were unable to find this job application. Please refresh the page and try again.");
             }
         }
+    };
+    $scope.getYoutubeVideo=function(url){
+        if(url.indexOf("http")!=-1){
+            if(url.indexOf("youtube")!=-1){
+                //https://www.youtube.com/watch?v=vwFHZpwoYSk&t=142s
+                $("#youtubegroup").removeClass("has-error");
+                var sp=url.split("watch?v=");
+                var videoID=$.trim(sp[1]);
+                var txt='<iframe width="100%" height="315" src="https://www.youtube.com/embed/'+videoID+'" frameborder="0" allowfullscreen></iframe>';
+                $("#youtuberesult").html(txt);
+            }
+            else{
+                $("#youtubegroup").addClass("has-error");
+                $("#youtube").val("Invalid URL");
+            }
+        }
+        else{
+            $("#youtubegroup").addClass("has-error");
+            $("#youtube").val("Invalid URL");
+        }
+    }
+    $scope.applyJob=function(jobID){
+        var userEmail=$.trim($("#appemail").val());
+        if(userEmail!=""){
+            $("#appemailgroup").removeClass("has-error");
+            var userName=$.trim($("#user_name").val());
+            if(userName!=""){
+                $("#user_namegroup").removeClass("has-error");    
+                var youtube=$.trim($("#youtube").val());
+                if((youtube!="")&&(youtube.indexOf(" ")==-1)){
+                    $("#youtubegroup").removeClass("has-error");        
+                    
+                }
+                else{
+                    $("#youtubegroup").addClass("has-error");        
+                }
+            }
+            else{
+                $("#user_namegroup").addClass("has-error");    
+            }
+        }
+        else{
+            $("#appemailgroup").addClass("has-error");
+        }
+
     };
 });
