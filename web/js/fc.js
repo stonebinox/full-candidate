@@ -345,7 +345,7 @@ app.controller('apps',function($scope,$http,$compile){
         }
     };
 });
-var app=angular.module("jobs",[]);
+var app=angular.module("jobs",['ngRoute']);
 app.controller("joblist",function($scope,$compile){
     $scope.application_id=null;
     $scope.jobArray=[];
@@ -380,7 +380,7 @@ app.controller("joblist",function($scope,$compile){
                         responseText=JSON.parse(responseText);
                         $scope.jobArray=responseText.slice();
                         $scope.displayJobs();
-                        $scope.jobOffset+=100;
+                        //$scope.jobOffset+=100;
                     }
                 }
                 else{
@@ -388,5 +388,72 @@ app.controller("joblist",function($scope,$compile){
                 }
             }
         });
+    };
+    $scope.displayJobs=function(){
+        var jobs=$scope.jobArray.slice();
+        if(jobs.length>0){
+            var table=document.createElement("table");
+            $(table).addClass("table");
+                var thead=document.createElement("thead");
+                    var tr1=document.createElement("tr");
+                        var th1=document.createElement("th");
+                        $(th1).html("Title");
+                    $(tr1).append(th1);
+                        var th2=document.createElement("th");
+                        $(th2).html("Description");
+                    $(tr1).append(th2);
+                        var th3=document.createElement("th");
+                        $(th3).html("Company");
+                    $(tr1).append(th3);
+                        var th4=document.createElement("th");
+                        $(th4).html("Posted");
+                    $(tr1).append(th4);
+                $(thead).append(tr1);
+            $(table).append(thead);
+                var tbody=document.createElement("tbody");
+            for(var i=0;i<jobs.length;i++){
+                var job=jobs[i];
+                var appID=job.idapplication_master;
+                var appTitle=stripslashes(job.application_title);
+                var appDesc=nl2br(stripslashes(job.application_description));
+                var timestamp=job.timestamp;
+                var sp=timestamp.split(" ");
+                timestamp=dateFormat(sp[0])+"at "+sp[1];
+                var jobPoster=job.user_master_iduser_master;
+                var jobPosterName=stripslashes(jobPoster.user_name);
+                var tr=document.createElement("tr");
+                    var td1=document.createElement("td");
+                        var a=document.createElement("a");
+                        $(a).attr("href","#!/job/"+appID);
+                        $(a).html(appTitle);
+                        $(a).attr("title","Open application");
+                        $(a).attr("data-toggle","tooltip");
+                        $(a).attr("data-placement","auto");
+                    $(td1).html(a);   
+                $(tr).append(td1);
+                    var td2=document.createElement("td");
+                    $(td2).html(appDesc);
+                $(tr).append(td2);
+                    var td3=document.createElement("td");
+                    $(td3).html(jobPosterName);
+                $(tr).append(td3);
+                    var td4=document.createElement("td");
+                    $(td4).html(timestamp);
+                $(tr).append(td4);
+                $(tbody).append(tr);
+            }
+            $(table).append(tbody);
+            $("#joblist").html(table);
+            $compile("#joblist")($scope);
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+        }
+        else{
+            var p=document.createElement("p");
+            $(p).addClass("text-center");
+            $(p).html("No jobs to display.");
+            $("#joblist").html(p);
+        }
     };
 });
