@@ -155,5 +155,26 @@ $app->get('/deleteApplication',function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get('/getLiveApplications',function(Request $request) use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/applicationMaster.php");
+        $application=new applicationMaster;
+        $response=$application->getLiveApplications($request->get("offset"));
+        if(is_array($response))
+        {
+            return json_encode($response);
+        }
+        else
+        {
+            return $response;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>

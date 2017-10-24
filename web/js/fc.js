@@ -111,7 +111,7 @@ app.controller('apps',function($scope,$http,$compile){
                 var tr=document.createElement("tr");
                     var td1=document.createElement("td");
                         var a=document.createElement("a");
-                        $(a).attr("href","#");
+                        $(a).attr("href","#!/job/"+appID);
                         $(a).html(appTitle);
                         $(a).attr("title","Open application");
                         $(a).attr("data-toggle","tooltip");
