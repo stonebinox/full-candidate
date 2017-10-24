@@ -345,3 +345,53 @@ app.controller('apps',function($scope,$http,$compile){
         }
     };
 });
+var app=angular.module("jobs",[]);
+app.controller("joblist",function($scope,$compile){
+    $scope.application_id=null;
+    $scope.jobArray=[];
+    $scope.jobOffset=0;
+    $scope.getLiveApplications=function(){
+        var dt=new Date().getTime();
+        $.ajax({
+            url:"getLiveApplications",
+            method: "GET",
+            data: {
+                offset: $scope.offset,
+                dt: dt
+            },
+            error: function(xhr,stat,err){
+                messageBox("Problem","Something went wrong while getting fresh jobs. Please try again in a bit. This is the error we see: "+err);
+            },
+            success:function(responseText){
+                console.log(responseText);
+                if(typeof responseText=="object"){
+                    responseText=JSON.parse(responseText);
+                    $scope.jobArray=responseText.slice();
+                    $scope.displayJobs();
+                    $scope.offset+=100;
+                }
+                else{
+                    responseText=$.trim(responseText);
+                    if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
+                        if(responseText=="INVALID_APPLICATION_ID"){
+                            messageBox("Invalid Application","The application you are trying to make changes to is invalid or doesn't exist.");
+                        }
+                        else if(responseText=="NO_PERMISSION"){
+                            messageBox("No Permission","You do not have have permission to perform this action.");
+                        }
+                        else if(responseText=="APPLICATION_DELETED"){
+                            messageBox("Application Deleted",'The application was deleted successfully.');
+                            $scope.getApplications();
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while deleting your application. This is the error we see: "+responseText);
+                        }
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while deleting your application. Please try again in a bit. This is the error we see: "+responseText);
+                    }
+                }
+            }
+        });
+    };
+});
