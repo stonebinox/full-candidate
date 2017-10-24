@@ -86,12 +86,12 @@ class applicationMaster extends userMaster
         {
             $am="SELECT idapplication_master FROM application_master WHERE stat!='0' AND user_master_iduser_master='$userID' ORDER BY idapplication_master DESC LIMIT 100";
             $appArray=array();
-            $am=$app['db']->fetchAssoc($am);
+            $am=$app['db']->fetchAll($am);
+            var_dump($am);
             for($i=0;$i<count($am);$i++)
             {
                 $application=$am[$i];
                 $appID=$application['idapplication_master'];
-                echo $appID;
                 $this->__construct($appID);
                 $application=$this->getApplication();
                 if(is_array($application))
