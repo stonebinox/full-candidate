@@ -363,7 +363,6 @@ app.controller("joblist",function($scope,$compile){
                 messageBox("Problem","Something went wrong while getting fresh jobs. Please try again in a bit. This is the error we see: "+err);
             },
             success:function(responseText){
-                console.log(responseText);
                 responseText=$.trim(responseText);
                 if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
                     if(responseText=="INVALID_APPLICATION_ID"){
