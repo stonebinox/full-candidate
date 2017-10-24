@@ -1,6 +1,3 @@
-function getYoutubeVideo(){
-    angular.element(document.getElementById("youtubegroup")).scope().getYoutubeVideo();
-}
 var app=angular.module('login',[]);
 app.controller('auth',function($scope){});
 var app=angular.module('registration',[]);
@@ -360,6 +357,9 @@ app.config(function($routeProvider){
         controller: 'joblist'
     });
 });
+function getYoutubeVideo(){
+    angular.element(document.getElementById("youtubegroup")).scope().getYoutubeVideo();
+}
 app.controller("joblist",function($scope,$compile,$routeParams){
     $scope.application_id=null;
     $scope.jobArray=[];
