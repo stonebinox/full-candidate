@@ -80,7 +80,7 @@ app.controller('apps',function($scope,$http,$compile){
                 var thead=document.createElement("thead");
                     var tr1=document.createElement("tr");
                         var th1=document.createElement("th");
-                        $(th).html("Title");
+                        $(th1).html("Title");
                     $(tr1).append(th);
                         var th2=document.createElement("th");
                         $(th2).html("Descriptiom");
