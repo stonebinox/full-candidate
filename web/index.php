@@ -169,5 +169,13 @@ $app->get('/getLiveApplications',function(Request $request) use($app){
         return $response;
     }
 });
+$app->post("/applyJob",function(Request $request) use($app){
+    require("../classes/userMaster.php");
+    require("../classes/applicationMaster.php");
+    require("../classes/responseMaster.php");
+    $response=new responseMaster;
+    $output=$response->saveResponse($request->get("user_email"),$request->get("user_name"),$request->get("youtube"),$request->get("application_id"));
+    return $output;
+});
 $app->run();
 ?>

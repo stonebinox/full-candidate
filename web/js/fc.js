@@ -357,9 +357,6 @@ app.config(function($routeProvider){
         controller: 'joblist'
     });
 });
-function getYoutubeVideo(){
-    angular.element(document.getElementById("youtubegroup")).scope().getYoutubeVideo();
-}
 app.controller("joblist",function($scope,$compile,$routeParams){
     $scope.application_id=null;
     $scope.jobArray=[];
@@ -496,6 +493,9 @@ app.controller("joblist",function($scope,$compile,$routeParams){
                 var jobPosterName=stripslashes(jobPoster.user_name);
                 var well=document.createElement("div");
                 $(well).addClass("well");
+                    var p=document.createElement("p");
+                    $(p).html(jobDesc);
+                $(well).append(p);
                     var h5=document.createElement("h5");
                     $(h5).html("Job posted by");
                 $(well).append(h5);
