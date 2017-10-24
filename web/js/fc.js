@@ -125,11 +125,26 @@ app.controller('apps',function($scope,$http,$compile){
                     $(td3).html(stat);
                 $(tr).append(td3);
                     var td4=document.createElement("td");
-                        var button=document.createElement("button");
-                        $(button).addClass("btn btn-info btn-xs");
-                        $(button).attr("type","button");
-                        $(button).html("Make live");
-                    $(td4).html(button);
+                        var btnGroup=document.createElement("div");
+                        $(btnGroup).addClass("btn-group");
+                        if(stat==2){
+                            var button=document.createElement("button");
+                            $(button).addClass("btn btn-info btn-xs");
+                            $(button).attr("type","button");
+                            $(button).html("Make live");
+                            $(btnGroup).append(button);
+                        }
+                            var button3=document.createElement("button");
+                            $(button3).addClass("btn btn-xs");
+                            $(button3).attr("type","button");
+                            $(button3).html("See applicants");
+                        $(btnGroup).append(button3);
+                            var button2=document.createElement("button");
+                            $(button2).addClass("btn btn-danger btn-xs");
+                            $(button2).attr("type","button");
+                            $(button2).html("Delete");
+                        $(btnGroup).append(button2);
+                    $(td4).html(btnGroup);
                 $(tr).append(td4);
                 $(tbody).append(tr);
             }

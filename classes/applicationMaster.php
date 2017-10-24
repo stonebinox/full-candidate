@@ -153,5 +153,50 @@ class applicationMaster extends userMaster
             return "INVALID_APPLICATION_TITLE";
         }
     }
+    function getApplicationOwner() //to get application owner
+    {
+        if($this->applicationValid)
+        {
+            $app=$this->app;
+            $appID=$this->application_id;
+            $am="SELECT user_master_iduser_master FROM application_master WHERE idapplication_master='$appID'";
+            $am=$app['db']->fetchAssoc($am);
+            if(($am!="")&&($am!=NULL))
+            {
+                return $am['user_master_iduser_master'];
+            }
+            else
+            {
+                return "INVALID_APPLICATION_ID";
+            }
+        }
+        else
+        {
+            return "INVALID_APPLICATION_ID";
+        }
+    }
+    function makeApplicationLive() //to make an application live
+    {
+        if($this->applicationValid)
+        {
+            $app=$this->app;
+            $appID=$this->application_id;
+            $appOwner=$this->getApplicationOwner();
+            if($appOwner==$app['session']->get("uid"))
+            {
+                $up="UPDATE application_master SET stat='1' WHERE idapplication_master='$appID'";
+                $up=$app['db']->executeUpdate($up);
+                return "APPLICATION_UPDATED";
+            }
+            else
+            {
+                return "NO_PERMISSION";
+            }
+        }
+        else
+        {
+            return "INVALID_APPLICATION_ID";
+        }
+    }
 }
 ?>
