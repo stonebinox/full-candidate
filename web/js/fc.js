@@ -137,9 +137,9 @@ app.controller('apps',function($scope,$http,$compile){
             $(table).append(tbody);
             $("#appHolder").append(table);
             $compile("#appHolder")($scope);
-            $('[data-toggle]="tooltip').tooltip({
+            /*$('[data-toggle]="tooltip').tooltip({
                 trigger: hover
-            });
+            });*/
         }
         else{
             var p=document.createElement("p");
