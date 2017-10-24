@@ -500,6 +500,11 @@ app.controller("joblist",function($scope,$compile,$routeParams){
             $(well).append(h3);
             var mainDiv=document.createElement("div");
             $(mainDiv).append(well);
+            var well2=document.createElement("div");
+            $(well2).addClass("well");
+            var txt='<form name="jobapply"><div class="form-group" id="appemailgroup"><label for="appemail">Your email</label><input type="email" name="appemail" id="appemail" placeholder="Enter a valid email ID"></div><div class="form-group" id="user_namegroup"><label for="user_name">Your full name</label><input type="text" name="user_name" id="user_name" placeholder="Enter your full name"></div><div class="form-group" id="youtubegroup"><label for="youtubegroup">Youtube video URL</label><input type="url" name="youtube" id="youtube" placeholder="Paste a YouTube link here"></div><button type="button" class="btn btn-primary">Apply</button></form>';
+            $(well2).html(txt);
+            $(mainDiv).append(well2);
             messageBox(jobTitle,mainDiv);
         }
         else{
