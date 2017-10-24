@@ -531,11 +531,13 @@ app.controller("joblist",function($scope,$compile,$routeParams){
             else{
                 $("#youtubegroup").addClass("has-error");
                 $("#youtube").val("Invalid URL");
+                $("#youtuberesult").html('');
             }
         }
         else{
             $("#youtubegroup").addClass("has-error");
             $("#youtube").val("Invalid URL");
+            $("#youtuberesult").html('');
         }
     }
     $scope.applyJob=function(jobID){
