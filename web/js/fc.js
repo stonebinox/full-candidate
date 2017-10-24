@@ -417,7 +417,7 @@ app.controller("joblist",function($scope,$compile){
                 var appDesc=nl2br(stripslashes(job.application_description));
                 var timestamp=job.timestamp;
                 var sp=timestamp.split(" ");
-                timestamp=dateFormat(sp[0])+"at "+sp[1];
+                timestamp=dateFormat(sp[0])+" at "+sp[1];
                 var jobPoster=job.user_master_iduser_master;
                 var jobPosterName=stripslashes(jobPoster.user_name);
                 var tr=document.createElement("tr");
@@ -428,6 +428,7 @@ app.controller("joblist",function($scope,$compile){
                         $(a).attr("title","Open application");
                         $(a).attr("data-toggle","tooltip");
                         $(a).attr("data-placement","auto");
+                        $(a).attr("ng-click","openApplication("+appID+")");
                     $(td1).html(a);   
                 $(tr).append(td1);
                     var td2=document.createElement("td");
@@ -453,6 +454,41 @@ app.controller("joblist",function($scope,$compile){
             $(p).addClass("text-center");
             $(p).html("No jobs to display.");
             $("#joblist").html(p);
+        }
+    };
+    $scope.openApplication=function(appID){
+        var jobs=$scope.jobArray.slice();
+        var pos=null;
+        for(var i=0;i<jobs.length;i++){
+            var job=jobs[i];
+            if(appID==job.idapplication_master){
+                pos=i;
+                break;
+            }
+        }
+        if(pos!=null){
+            var job=jobs[pos];
+            var jobTitle=stripslashes(job.application_title);
+            var jobDesc=nl2br(stripslashes(job.application_description));
+            var timestamp=job.timestamp;
+            var sp=timestamp.split(" ");
+            timestamp=dateFormat(sp[0])+" at "+sp[1];
+            var jobPoster=job.user_master_iduser_master;
+            var jobPosterName=stripslashes(jobPoster.user_name);
+            var well=document.createElement("div");
+            $(well).addClass("well");
+                var h5=document.createElement("h5");
+                $(h5).html("Job posted by");
+            $(well).append(h5);
+                var h3=document.createElement("h3");
+                $(h3).html(jobPosterName);
+            $(well).append(h3);
+            var mainDiv=document.createElement("div");
+            $(mainDiv).append(well);
+            messageBox(jobTitle,mainDiv);
+        }
+        else{
+            messageBox("Invalid Application","We were unable to find this job application. Please refresh the page and try again.");
         }
     };
 });
