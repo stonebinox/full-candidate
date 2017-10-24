@@ -70,7 +70,7 @@ app.controller('apps',function($scope,$http,$compile){
         });
     }; 
     $scope.displayApplications=function(){
-        var applications=$scope.applicationArray;
+        var applications=$scope.applicationArray.slice();
         console.log(applications);
         if(applications.length>0){
             var count=applications.length;
