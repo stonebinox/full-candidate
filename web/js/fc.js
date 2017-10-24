@@ -121,7 +121,7 @@ app.controller('apps',function($scope,$http,$compile){
                 $(tr).append(td3);
                     var td4=document.createElement("td");
                         var button=document.createElement("button");
-                        $(button).addClass("btn btn-default btn-sm");
+                        $(button).addClass("btn btn-info btn-xs");
                         $(button).attr("type","button");
                         $(button).html("Make live");
                     $(td4).html(button);
