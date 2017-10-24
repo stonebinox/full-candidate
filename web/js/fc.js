@@ -132,6 +132,7 @@ app.controller('apps',function($scope,$http,$compile){
                             $(button).addClass("btn btn-info btn-xs");
                             $(button).attr("type","button");
                             $(button).html("Make live");
+                            $(button).attr("ng-click","makeApplicationLive()");
                             $(btnGroup).append(button);
                         }
                         else if(stat=="Live"){
@@ -252,7 +253,7 @@ app.controller('apps',function($scope,$http,$compile){
                             }
                         }
                         else{
-                            messageBox("Problem","Something went wrong while searching for workspaces. Please try again in a bit. This is the error we see: "+err,0);
+                            messageBox("Problem","Something went wrong while updating your application. Please try again in a bit. This is the error we see: "+responseText);
                         }
                     },
                     beforeSend:function(){
@@ -267,5 +268,41 @@ app.controller('apps',function($scope,$http,$compile){
         else{
             $("#apptitlegroup").addClass("has-error");
         }
+    };
+    $scope.makeApplicationLive=function(appID){
+        var dt=new Date().getTime();
+        $.ajax({
+            url:"makeApplicationLive",
+            method: "GET",
+            data: {
+                application_id: appID,
+                dt: dt
+            },
+            error: function(xhr,stat,err){
+                messageBox("Problem","Something went wrong while updating this application. Please try again in a bit. This is the error we see: "+err);
+            },
+            success:function(responseText){
+                if((responseText!="")&&(responseText!=null)&&(responseText!=undefined)&&(responseText!="INVALID_PARAMETERS")){
+                    if(responseText=="INVALID_APPLICATION_ID"){
+                        messageBox("Invalid Application","The application you are trying to make changes to is invalid or doesn't exist.");
+                    }
+                    else if(responseText=="NO_PERMISSION"){
+                        messageBox("No Permission","You do not have have permission to perform this action.");
+                    }
+                    else if(responseText=="APPLICATION_UPDATED"){
+                        messageBox("Application Update","Your application is now live! Candidates can now apply from the applications page.");
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while updating your application. This is the error we see: "+responseText);
+                    }
+                }
+                else{
+                    messageBox("Problem","Something went wrong while updating your application. Please try again in a bit. This is the error we see: "+responseText);
+                }
+            },
+            beforeSend:function(){
+                $("#myModal").find(".btn-primary").addClass("disabled");
+            }
+        });
     };
 });
