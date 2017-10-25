@@ -2,7 +2,7 @@
 {% block content %}
 <body ng-app="jobs">
     <div class="container" ng-controller="joblist" ng-init="getLiveApplications()">
-        <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;">
+        <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;cursor:pointer;" onclick="window.location='home';">
         <h3 class="text-center">Job List</h3>
         <div class="well" id="joblist"></div>
     </div>
