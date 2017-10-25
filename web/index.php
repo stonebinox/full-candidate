@@ -73,7 +73,7 @@ $app->post('/login_action',function(Request $request) use($app){
     }
     else
     {
-        return $app->redirect('/login_error');
+        return $app->redirect('/login?err=1');
     }
 });
 $app->get('/registration',function() use($app){
