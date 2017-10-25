@@ -35,7 +35,7 @@ $app->get('/', function() use($app){
     }
     else
     {  
-        return $app->redirect('/login');
+        return $app['twig']->render('homepage.html.twig');
     }
 });
 $app->get('/applications',function() use($app){
@@ -49,7 +49,13 @@ $app->get('/applications',function() use($app){
     }
 });
 $app->get('/login',function() use($app){
-    return $app['twig']->render('index.html.twig'); 
+    if($app['session']->get('uid')!=NULL)
+    {
+        return $app->redirct("/applications");
+    }
+    else{
+        return $app['twig']->render('index.html.twig'); 
+    }
 });
 $app->get('/jobs',function() use($app){
     return $app['twig']->render("jobs.html.twig");
