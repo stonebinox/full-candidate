@@ -3,10 +3,10 @@
 <body ng-app="login">
     <div class="container" ng-controller="auth">
         <img src="images/fc-logo.png" alt="Full Candidate" width="250" class="img-responsive" style="margin: 0 auto;cursor:pointer;" onclick="window.location='home';">
-        <h3>Log in to your account</h3>
+        <h3>Company login</h3>
         <form method="post" action="login_action" autocomplete="off">
             <div class="form-group">
-                <label for="email">Email address</label>
+                <label for="email">Official email address</label>
                 <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter a valid email ID">
             </div>
             <div class="form-group">
@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" id="pwd" name="user_password" placeholder="Enter a valid password">
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>&nbsp;&nbsp;<input type="button" value="Forgot password?" class="btn">
-            <a href="registration">Create account</a>
+            <a href="registration">Create company account</a>
         </form>
         <script type="text/javascript">
         <!--
