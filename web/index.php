@@ -28,7 +28,7 @@ $app->register(new Silex\Provider\SessionServiceProvider, array(
 $app->before(function(Request $request) use($app){
     $request->getSession()->start();
 });
-$app->get('/', function() use($app){
+/*$app->get('/', function() use($app){
     if($app['session']->get('uid')!=NULL)
     {
         return $app->redirect('/applications');
@@ -37,7 +37,7 @@ $app->get('/', function() use($app){
     {  
         return $app->redirect("/home");
     }
-});
+});*/
 $app->get("/home",function() use($app){
     return $app['twig']->render('homepage.html.twig');
 });
