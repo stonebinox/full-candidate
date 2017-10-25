@@ -33,10 +33,13 @@ $app->get('/', function() use($app){
     {
         return $app->redirect('/applications');
     }
-    else
+    else 
     {  
-        return $app['twig']->render('homepage.html.twig');
+        return $app->redirect("/home");
     }
+});
+$app->get("/home",function() use($app){
+    return $app['twig']->render('homepage.html.twig');
 });
 $app->get('/applications',function() use($app){
     if($app['session']->get('uid')!=NULL)
